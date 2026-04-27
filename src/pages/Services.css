@@ -1,0 +1,97 @@
+@import "../styles/theme.css";
+
+/* PAGE */
+.services-page {
+  width: 100%;
+  background: var(--color-bg);
+  color: var(--ftl-white);
+}
+
+/* HERO */
+.services-hero {
+   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-32) var(--space-8) var(--space-24);
+  background: var(--gradient-hero);
+  overflow: hidden;
+  color: var(--ftl-white);
+}
+
+
+.services-hero__heading {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.services-hero__heading span {
+  color: #ff1e1e;
+}
+
+.services-hero__sub {
+  margin-top: 15px;
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+/* SECTION */
+.services-section {
+  padding: 80px 20px;
+}
+
+/* GRID */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* CARD */
+.service-card {
+  background: #111;
+  border-radius: 16px;
+  padding: 40px 25px;
+  text-align: center;
+  transition: 0.3s ease;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+/* HOVER EFFECT */
+.service-card:hover {
+  transform: translateY(-10px);
+  border-color: #ff1e1e;
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+}
+
+/* ICON */
+.service-card__icon {
+  font-size: 40px;
+  color: #ff1e1e;
+  margin-bottom: 20px;
+}
+
+/* TITLE */
+.service-card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+/* DESCRIPTION (FIXED VISIBILITY ISSUE) */
+.service-card__description {
+  font-size: 0.95rem;
+  color: #bbbbbb;   /* 🔥 FIXED: earlier too dull */
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .services-hero__heading {
+    font-size: 2rem;
+  }
+}

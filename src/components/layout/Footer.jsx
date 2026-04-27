@@ -43,7 +43,7 @@ const Footer = () => {
           <h3>Contact Info</h3>
 
           <p>📍 Fortune Tech Solutions</p>
-          <p>📞 +91 XXXXX XXXXX</p>
+          <p>📞 +91 98433 29804</p>
           <p>✉ info@fortunetechsolutions.com</p>
         </div>
 
