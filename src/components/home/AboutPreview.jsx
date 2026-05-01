@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AboutPreview.css";
-import aboutImage from "../../assets/images/about.jpg";
+import aboutImage from "../../assets/images/who we are.jpeg";
 
 const highlights = [
   "Industry-relevant curriculum",

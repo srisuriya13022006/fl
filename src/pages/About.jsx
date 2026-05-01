@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import "./About.css";
-import aboutImage from "../assets/images/about.jpg";
+import aboutImage from "../assets/images/who we are.jpeg";
 
 const trainingPoints = [
   {
@@ -73,7 +73,7 @@ const About = () => {
                 className="about-intro__image"
               />
               <div className="about-intro__image-badge">
-                <span className="stat-value">10+</span>
+                <span className="stat-value">5+</span>
                 <span className="stat-label">Years of Excellence</span>
               </div>
             </div>

@@ -3,8 +3,7 @@
    Premium enhanced navbar · Brand-aligned · Animated
    ============================================================ */
 
-/* ── Google Font Import (Barlow Condensed + DM Sans) ── */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
 @import "../../styles/theme.css";
 
 /* ─────────────────────────────────────────────
@@ -14,18 +13,20 @@
   width: 100%;
   position: sticky;
   top: 0;
-  z-index: 999;
-  background: rgba(29, 29, 29, 0.96);         /* --ftl-charcoal at 96% */
+  z-index: var(--z-sticky);
+  background: rgba(29, 29, 29, 0.96);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
-  transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.35s ease;
+  transition: background var(--transition-slow),
+              box-shadow  var(--transition-slow),
+              padding     0.35s ease;
 }
 
 /* Scrolled state — added via JS */
 .navbar.scrolled {
-  background: rgba(18, 18, 18, 0.98);
+  background: rgba(15, 15, 15, 0.98);
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.55),
               0 0 0 1px rgba(204, 20, 20, 0.08);
 }
@@ -36,7 +37,13 @@
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, #CC1414 30%, #E53030 65%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ftl-red) 30%,
+    var(--ftl-red-light) 65%,
+    transparent 100%
+  );
   opacity: 0.85;
 }
 
@@ -45,12 +52,13 @@
    ───────────────────────────────────────────── */
 .navbar-container {
   width: 90%;
-  max-width: 1300px;
+  max-width: var(--container-xl);
   margin: 0 auto;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-6);
   transition: height 0.35s ease;
 }
 
@@ -59,7 +67,7 @@
 }
 
 /* ─────────────────────────────────────────────
-   LOGO
+   LOGO  —  THE FIX IS HERE
    ───────────────────────────────────────────── */
 .navbar-logo {
   display: flex;
@@ -67,27 +75,73 @@
   height: 100%;
   flex-shrink: 0;
   text-decoration: none;
+  padding: 8px 14px 8px 10px;
+
+  /*
+    FROSTED LOGO CHIP
+    ─────────────────
+    A very subtle light-tinted backdrop lifts the logo off
+    the dark navbar, giving the dark "FORTUNE" text the
+    contrast it needs to read clearly.
+  */
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-lg);
+  transition: background var(--transition-base),
+              border-color var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+.navbar-logo:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(204, 20, 20, 0.35);
+  box-shadow: 0 0 0 3px rgba(204, 20, 20, 0.10),
+              inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .navbar-logo img {
   display: block;
-  max-height: 90%;
+  height: 48px;
   width: auto;
   object-fit: contain;
-  /* Brightness tweak so white logo pops on dark bg */
-  filter: brightness(1.05) drop-shadow(0 0 6px rgba(204, 20, 20, 0.18));
+
+  /*
+    brightness(1.35) — lifts the dark charcoal "FORTUNE"
+      text so it reads as a visible medium-dark gray on
+      the frosted chip background, not black-on-black.
+
+    contrast(0.95)   — softens any harshness from the
+      brightness boost; keeps the red "TECH" punchy.
+
+    drop-shadow      — adds a very faint red halo behind
+      the icon to reinforce brand identity.
+  */
+  filter:
+    brightness(1.35)
+    contrast(0.95)
+    drop-shadow(0 0 8px rgba(204, 20, 20, 0.20));
+
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
               filter 0.3s ease;
 }
 
 .navbar-logo:hover img {
-  transform: scale(1.06);
-  filter: brightness(1.1) drop-shadow(0 0 10px rgba(204, 20, 20, 0.35));
+  transform: scale(1.05);
+  filter:
+    brightness(1.5)
+    contrast(0.92)
+    drop-shadow(0 0 12px rgba(204, 20, 20, 0.38));
+}
+
+/* Slightly smaller chip when scrolled */
+.navbar.scrolled .navbar-logo {
+  padding: 6px 12px 6px 8px;
 }
 
 .navbar.scrolled .navbar-logo img {
-  height: 44px;
+  height: 42px;
 }
+
 
 /* ─────────────────────────────────────────────
    NAV MENU — Desktop
@@ -107,14 +161,15 @@
   display: inline-flex;
   align-items: center;
   padding: 6px 14px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(200, 205, 212, 0.85);       /* --ftl-silver-light at 85% */
+  font-weight: var(--font-weight-medium);
+  color: rgba(200, 205, 212, 0.85);
   text-decoration: none;
   letter-spacing: 0.01em;
-  border-radius: 6px;
-  transition: color 0.25s ease, background 0.25s ease;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-base),
+              background var(--transition-base);
   white-space: nowrap;
 }
 
@@ -126,61 +181,61 @@
   left: 14px;
   right: 14px;
   height: 2px;
-  background: #CC1414;
-  border-radius: 2px;
+  background: var(--ftl-red);
+  border-radius: var(--radius-xs);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-menu li a:hover {
-  color: #ffffff;
+  color: var(--ftl-white);
   background: rgba(255, 255, 255, 0.05);
 }
 .nav-menu li a:hover::after {
   transform: scaleX(1);
 }
 
-/* Active (NavLink adds .active) */
+/* Active */
 .nav-menu li a.active {
-  color: #ffffff;
-  font-weight: 600;
+  color: var(--ftl-white);
+  font-weight: var(--font-weight-semibold);
 }
 .nav-menu li a.active::after {
   transform: scaleX(1);
-  background: #CC1414;
+  background: var(--ftl-red);
 }
 
 /* ─────────────────────────────────────────────
-   CTA BUTTON — "Book Free Consultation"
+   CTA BUTTON
    ───────────────────────────────────────────── */
 .consult-btn {
   position: relative;
   display: inline-flex !important;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   padding: 10px 20px !important;
-  margin-left: 0.5rem;
-  font-family: 'Barlow Condensed', sans-serif !important;
-  font-size: 0.82rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
+  margin-left: var(--space-2);
+  font-family: var(--font-label) !important;
+  font-size: var(--text-xs) !important;
+  font-weight: var(--font-weight-bold) !important;
+  letter-spacing: var(--tracking-wide) !important;
   text-transform: uppercase;
-  color: #ffffff !important;
-  background: linear-gradient(135deg, #CC1414 0%, #A80F0F 100%);
+  color: var(--ftl-white) !important;
+  background: var(--gradient-brand);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px !important;
-  box-shadow: 0 4px 18px rgba(204, 20, 20, 0.30),
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-red-sm),
               inset 0 1px 0 rgba(255, 255, 255, 0.12);
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.3s ease,
-              background 0.3s ease !important;
+  transition: transform var(--transition-spring),
+              box-shadow var(--transition-base),
+              background var(--transition-base) !important;
 }
 
-/* Shimmer sweep on hover */
+/* Shimmer sweep */
 .consult-btn::before {
   content: '';
   position: absolute;
@@ -189,7 +244,7 @@
   background: linear-gradient(
     120deg,
     transparent 0%,
-    rgba(255,255,255,0.22) 50%,
+    rgba(255, 255, 255, 0.22) 50%,
     transparent 100%
   );
   transform: skewX(-20deg);
@@ -197,24 +252,19 @@
   pointer-events: none;
 }
 
-/* Remove the underline pseudo-element for the CTA */
-.consult-btn::after {
-  display: none !important;
-}
+.consult-btn::after { display: none !important; }
 
 .consult-btn:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 28px rgba(204, 20, 20, 0.45),
+  box-shadow: var(--shadow-red-md),
               inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
-  background: linear-gradient(135deg, #E03030 0%, #CC1414 100%);
-  color: #fff !important;
+  background: linear-gradient(135deg, var(--ftl-red-light) 0%, var(--ftl-red) 100%);
+  color: var(--ftl-white) !important;
 }
-.consult-btn:hover::before {
-  left: 125%;
-}
+.consult-btn:hover::before { left: 125%; }
 .consult-btn:active {
   transform: translateY(0px) !important;
-  box-shadow: 0 3px 12px rgba(204, 20, 20, 0.35) !important;
+  box-shadow: var(--shadow-red-sm) !important;
 }
 
 /* ─────────────────────────────────────────────
@@ -229,71 +279,61 @@
   height: 38px;
   padding: 6px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition: background var(--transition-base),
+              border-color var(--transition-base);
   flex-shrink: 0;
 }
 .menu-icon:hover {
-  background: rgba(204, 20, 20, 0.1);
-  border-color: rgba(204, 20, 20, 0.3);
+  background: rgba(204, 20, 20, 0.10);
+  border-color: rgba(204, 20, 20, 0.30);
 }
 
 .bar {
   display: block;
   width: 100%;
   height: 2px;
-  background: #CDD2D8;
-  border-radius: 10px;
+  background: var(--ftl-silver-light);
+  border-radius: var(--radius-pill);
   transform-origin: center;
   transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
               opacity   0.25s ease,
-              background 0.25s ease,
+              background var(--transition-base),
               width 0.25s ease;
 }
-.menu-icon:hover .bar { background: #CC1414; }
+.menu-icon:hover .bar { background: var(--ftl-red); }
 
-/* Hamburger → X animation */
-.menu-icon.open .bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.menu-icon.open .bar:nth-child(2) {
-  opacity: 0;
-  width: 0;
-}
-.menu-icon.open .bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-.menu-icon.open .bar { background: #CC1414; }
+.menu-icon.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-icon.open .bar:nth-child(2) { opacity: 0; width: 0; }
+.menu-icon.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.menu-icon.open .bar               { background: var(--ftl-red); }
 
 /* ─────────────────────────────────────────────
    MOBILE MENU
    ───────────────────────────────────────────── */
 @media screen and (max-width: 992px) {
 
-  .menu-icon {
-    display: flex;
-  }
+  .menu-icon { display: flex; }
 
   .nav-menu {
     position: fixed;
-    top: 80px;                    /* matches navbar height */
+    top: 80px;
     left: 0;
     width: 100%;
     min-height: calc(100vh - 80px);
     background: linear-gradient(165deg, #181818 0%, #1D1D1D 100%);
     flex-direction: column;
     align-items: stretch;
-    padding: 1.5rem 1.5rem 3rem;
-    gap: 0.25rem;
-    border-top: 1px solid rgba(204, 20, 20, 0.2);
-
-    /* Slide down animation */
+    padding: var(--space-6) var(--space-6) var(--space-16);
+    gap: var(--space-1);
+    border-top: 1px solid rgba(204, 20, 20, 0.20);
     opacity: 0;
     transform: translateY(-12px);
     pointer-events: none;
-    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: opacity 0.35s ease,
+                transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
     overflow-y: auto;
   }
 
@@ -323,38 +363,36 @@
     align-items: center;
     width: 100%;
     padding: 14px 16px;
-    font-size: 1rem;
+    font-size: var(--text-base);
     color: rgba(200, 205, 212, 0.9);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     border-left: 3px solid transparent;
     background: transparent;
-    transition: color 0.2s ease,
-                background 0.2s ease,
-                border-color 0.2s ease,
+    transition: color var(--transition-base),
+                background var(--transition-base),
+                border-color var(--transition-base),
                 padding-left 0.25s ease;
   }
 
-  /* Remove underline on mobile — use left border instead */
   .nav-menu li a::after { display: none; }
 
   .nav-menu li a:hover {
-    color: #ffffff;
+    color: var(--ftl-white);
     background: rgba(204, 20, 20, 0.08);
-    border-left-color: #CC1414;
+    border-left-color: var(--ftl-red);
     padding-left: 22px;
   }
-
   .nav-menu li a.active {
-    color: #CC1414;
-    background: rgba(204, 20, 20, 0.1);
-    border-left-color: #CC1414;
-    font-weight: 600;
+    color: var(--ftl-red);
+    background: rgba(204, 20, 20, 0.10);
+    border-left-color: var(--ftl-red);
+    font-weight: var(--font-weight-semibold);
   }
 
   /* Divider before CTA */
   .nav-menu li:last-child {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
     border-top: 1px solid rgba(255, 255, 255, 0.07);
   }
 
@@ -363,20 +401,19 @@
     width: 100% !important;
     justify-content: center !important;
     padding: 13px 20px !important;
-    font-size: 0.9rem !important;
-    border-radius: 8px !important;
+    font-size: var(--text-sm) !important;
+    border-radius: var(--radius-md) !important;
     margin-left: 0 !important;
   }
 
-  .navbar.scrolled .navbar-container {
-    height: 72px;
-  }
+  .navbar.scrolled .navbar-container { height: 72px; }
 }
 
 /* ─────────────────────────────────────────────
    SMALL PHONES
    ───────────────────────────────────────────── */
 @media screen and (max-width: 480px) {
-  .navbar-container { width: 94%; }
-  .navbar-logo img  { height: 44px; }
-}
+  .navbar-container   { width: 94%; }
+  .navbar-logo img    { height: 40px; }
+  .navbar-logo        { padding: 6px 10px 6px 8px; }
+} 
