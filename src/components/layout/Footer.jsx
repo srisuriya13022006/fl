@@ -42,9 +42,9 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Contact Info</h3>
 
-          <p>📍 Fortune Tech Solutions</p>
+          <p>📍 Fortune Tech Labs</p>
           <p>📞 +91 98433 29804</p>
-          <p>✉ info@fortunetechsolutions.com</p>
+          <p>✉ info@fortunetechlabs.in</p>
         </div>
 
         {/* Social Links */}

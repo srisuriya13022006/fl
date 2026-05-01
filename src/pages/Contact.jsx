@@ -118,7 +118,7 @@ const Contact = () => {
                   <div className="contact-item__content">
                     <h3>Address</h3>
                     <p>
-                      Fortune Tech Solutions<br />
+                      Fortune Tech Labs<br />
                       No: 3, Balaji Nagar<br />
                       near Parasakthi Nagar<br />
                       Ganapathy, Coimbatore - 641006
@@ -147,8 +147,8 @@ const Contact = () => {
                   <div className="contact-item__content">
                     <h3>Email</h3>
                     <p>
-                      <a href="mailto:info@fortunetechsolutions.com">
-                        info@fortunetechsolutions.com
+                      <a href="mailto:info@fortunetechlabs.in">
+                        info@fortunetechlabs.in
                       </a>
                     </p>
                   </div>

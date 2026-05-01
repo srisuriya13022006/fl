@@ -121,7 +121,7 @@
   font-weight: var(--font-weight-extrabold);
   line-height: 1.08;
   letter-spacing: -0.025em;
-  color: var(--ftl-white);
+  color: var(--color-text-heading);
   margin-bottom: var(--space-5);
 }
 .accent-word {
@@ -140,7 +140,7 @@
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--ftl-silver-dark);
+  color: var(--color-text-muted);
   margin-bottom: var(--space-6);
 }
 .hero-sub-dot {
@@ -156,7 +156,7 @@
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: var(--leading-loose);
-  color: var(--ftl-silver-dark);
+  color: var(--color-text-body);
   max-width: 460px;
   margin-bottom: var(--space-8);
 }
@@ -216,18 +216,18 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--ftl-silver-light);
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(255,255,255,0.16);
+  color: var(--color-text-body);
+  background: rgba(58, 69, 86, 0.05);
+  border: 1.5px solid rgba(58, 69, 86, 0.15);
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: all var(--transition-base);
 }
 .hero-btn-ghost:hover {
-  color: var(--ftl-white);
-  background: rgba(204,20,20,0.10);
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-red-sm);
+  color: var(--color-text-heading);
+  background: rgba(58, 69, 86, 0.10);
+  border-color: rgba(34, 44, 60, 0.18);
+  box-shadow: var(--shadow-sm);
   transform: translateY(-2px);
 }
 
@@ -274,7 +274,7 @@
 .hero-stat-sep {
   width: 1px;
   height: 36px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(34, 44, 60, 0.12);
   flex-shrink: 0;
   align-self: center;
 }
@@ -326,10 +326,10 @@
 .hero-right {
   position: relative;
   overflow: hidden;
-  background: #111;
+  background: var(--color-bg-card);
 }
 
-/* ── Diagonal left-edge blend into dark panel ── */
+/* ── Diagonal left-edge blend into panel ── */
 .hero-right-edge {
   position: absolute;
   top: 0;
@@ -338,21 +338,21 @@
   height: 100%;
   background: linear-gradient(
     to right,
-    var(--ftl-charcoal) 0%,
-    rgba(29,29,29,0.7) 40%,
+    rgba(50,58,67,0.14) 0%,
+    rgba(50,58,67,0.08) 40%,
     transparent 100%
   );
   z-index: 3;
   pointer-events: none;
 }
 
-/* ── Dark overlay ── */
+/* ── Light overlay ── */
 .hero-right-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top,  rgba(0,0,0,0.75) 0%,  rgba(0,0,0,0.15) 45%, transparent 100%),
-    linear-gradient(to right, rgba(0,0,0,0.20) 0%,  transparent 50%);
+    linear-gradient(to top,  rgba(255,255,255,0.75) 0%,  rgba(255,255,255,0.15) 45%, transparent 100%),
+    linear-gradient(to right, rgba(255,255,255,0.20) 0%,  transparent 50%);
   z-index: 2;
   pointer-events: none;
 }

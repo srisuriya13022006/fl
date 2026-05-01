@@ -19,23 +19,23 @@
   --ftl-red-light:     #E53030;
   --ftl-red-muted:     #F5DADA;
 
-  --ftl-charcoal:      #1D1D1D;
-  --ftl-charcoal-soft: #2E2E2E;
+  --ftl-charcoal:      #323A43;
+  --ftl-charcoal-soft: #4A545E;
 
-  --ftl-silver:        #9BA4AF;
-  --ftl-silver-light:  #CDD2D8;
-  --ftl-silver-dark:   #6B7380;
+  --ftl-silver:        #7D8A97;
+  --ftl-silver-light:  #B0BBC8;
+  --ftl-silver-dark:   #5A6674;
 
   /* ── Neutrals ── */
   --ftl-white:         #FFFFFF;
-  --ftl-off-white:     #F7F7F8;
-  --ftl-gray-100:      #F1F2F4;
-  --ftl-gray-200:      #E2E4E8;
-  --ftl-gray-300:      #C8CDD4;
-  --ftl-gray-400:      #9BA4AF;
-  --ftl-gray-500:      #6B7380;
-  --ftl-gray-700:      #3A3D44;
-  --ftl-gray-900:      #1D1D1D;
+  --ftl-off-white:     #F5F6F8;
+  --ftl-gray-100:      #ECEFF3;
+  --ftl-gray-200:      #D8E0E8;
+  --ftl-gray-300:      #BAC6D0;
+  --ftl-gray-400:      #9AA7B5;
+  --ftl-gray-500:      #788592;
+  --ftl-gray-700:      #55616F;
+  --ftl-gray-900:      #2A333D;
 
   /* ── Semantic Roles ── */
   --color-primary:         var(--ftl-red);
@@ -49,8 +49,8 @@
   --color-bg:              var(--ftl-off-white);
   --color-bg-card:         var(--ftl-white);
   --color-bg-section-alt:  var(--ftl-gray-100);
-  --color-bg-dark:         var(--ftl-charcoal);
-  --color-bg-dark-soft:    #252525;
+  --color-bg-dark:         #E1E7EE;
+  --color-bg-dark-soft:    #F1F4F8;
 
   --color-text-heading:    var(--ftl-gray-900);
   --color-text-body:       var(--ftl-gray-700);
@@ -77,13 +77,13 @@
     linear-gradient(135deg, var(--ftl-silver-light) 0%, var(--ftl-silver-dark) 100%);
 
   --gradient-dark:
-    linear-gradient(160deg, #252525 0%, #1D1D1D 100%);
+    linear-gradient(160deg, #F0F3F7 0%, #E0E6EE 100%);
 
   --gradient-hero:
-    linear-gradient(135deg, #1D1D1D 0%, #2E2E2E 60%, #1A0808 100%);
+    linear-gradient(135deg, #F8F9FB 0%, #E6EAF2 60%, #DEE4EE 100%);
 
   --gradient-red-glow:
-    radial-gradient(ellipse at top left, rgba(204,20,20,0.18) 0%, transparent 65%);
+    radial-gradient(ellipse at top left, rgba(204,20,20,0.12) 0%, transparent 65%);
 
   /* ── Typography ── */
 
