@@ -1,60 +1,64 @@
 /* ============================================================
-   FORTUNE TECH LABS — Navbar.css
-   Premium enhanced navbar · Brand-aligned · Animated
+   FORTUNE TECH LABS — Navbar.css  (v3 — light theme)
+   Background: white/off-white from theme tokens always.
+   Scroll deepens shadow only — zero colour flip = zero flicker.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
 @import "../../styles/theme.css";
 
-/* ─────────────────────────────────────────────
+/* ══════════════════════════════════════════
    NAVBAR SHELL
-   ───────────────────────────────────────────── */
+   Always var(--color-bg-card) = #FFFFFF
+   Only shadow + border-color animate on scroll.
+══════════════════════════════════════════ */
 .navbar {
-  width: 100%;
   position: sticky;
   top: 0;
+  width: 100%;
   z-index: var(--z-sticky);
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(34, 44, 60, 0.08);
-  box-shadow: 0 12px 24px rgba(58, 69, 86, 0.08);
-  transition: background var(--transition-slow),
-              box-shadow  var(--transition-slow),
-              padding     0.35s ease;
+
+  background: var(--color-bg-card);                    /* #FFFFFF */
+  border-bottom: 1px solid var(--color-border);         /* --ftl-gray-200 */
+  box-shadow: var(--shadow-xs);
+
+  will-change: box-shadow, border-color;
+  transition:
+    box-shadow   0.38s ease,
+    border-color 0.38s ease;
 }
 
-/* Scrolled state — added via JS */
-.navbar.scrolled {
-  background: rgba(255,255,255,0.98);
-  box-shadow: 0 4px 32px rgba(58, 69, 86, 0.12),
-              0 0 0 1px rgba(204, 20, 20, 0.08);
+/* Scrolled: deepen shadow + faint red border — NO bg change */
+.navbar--scrolled {
+  border-bottom-color: var(--color-border-strong);
+  box-shadow:
+    var(--shadow-md),
+    0 1px 0 rgba(204, 20, 20, 0.08);
 }
 
-/* ── Slim red top-bar accent ── */
-.navbar::before {
-  content: '';
+/* ── Red top-accent line ── */
+.navbar__accent-line {
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
+  height: 2.5px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--ftl-red) 30%,
+    var(--ftl-red) 25%,
     var(--ftl-red-light) 65%,
     transparent 100%
   );
-  opacity: 0.85;
+  pointer-events: none;
 }
 
-/* ─────────────────────────────────────────────
+
+/* ══════════════════════════════════════════
    CONTAINER
-   ───────────────────────────────────────────── */
-.navbar-container {
+══════════════════════════════════════════ */
+.navbar__container {
   width: 90%;
   max-width: var(--container-xl);
   margin: 0 auto;
-  height: 80px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -62,358 +66,370 @@
   transition: height 0.35s ease;
 }
 
-.navbar.scrolled .navbar-container {
-  height: 68px;
+.navbar--scrolled .navbar__container {
+  height: 62px;
 }
 
-/* ─────────────────────────────────────────────
-   LOGO  —  THE FIX IS HERE
-   ───────────────────────────────────────────── */
-.navbar-logo {
+
+/* ══════════════════════════════════════════
+   LOGO
+   White background → logo's dark ink reads naturally.
+   No brightness filter needed. Just a clean hover.
+══════════════════════════════════════════ */
+.navbar__logo {
   display: flex;
   align-items: center;
-  height: 100%;
   flex-shrink: 0;
   text-decoration: none;
-  padding: 8px 14px 8px 10px;
-
-  /*
-    FROSTED LOGO CHIP
-    ─────────────────
-    A very subtle light-tinted backdrop lifts the logo off
-    the dark navbar, giving the dark "FORTUNE" text the
-    contrast it needs to read clearly.
-  */
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: var(--radius-lg);
-  transition: background var(--transition-base),
-              border-color var(--transition-base),
-              box-shadow var(--transition-base);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  border: 1px solid rgba(34, 44, 60, 0.08);
+  transition: opacity var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.navbar-logo:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(204, 20, 20, 0.35);
-  box-shadow: 0 0 0 3px rgba(204, 20, 20, 0.10),
-              inset 0 1px 0 rgba(255,255,255,0.08);
+.navbar__logo:hover {
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.navbar-logo img {
+.navbar__logo img {
   display: block;
-  height: 48px;
+  height: 60px;
   width: auto;
   object-fit: contain;
 
-  /*
-    brightness(1.35) — lifts the dark charcoal "FORTUNE"
-      text so it reads as a visible medium-dark gray on
-      the frosted chip background, not black-on-black.
+  /* Brighten dark logo ink for visibility on white background */
+  filter: 
+    brightness(0.85)
+    contrast(1.15)
+    drop-shadow(0 0 4px rgba(204, 20, 20, 0.12));
 
-    contrast(0.95)   — softens any harshness from the
-      brightness boost; keeps the red "TECH" punchy.
-
-    drop-shadow      — adds a very faint red halo behind
-      the icon to reinforce brand identity.
-  */
-  filter:
-    brightness(1.35)
-    contrast(0.95)
-    drop-shadow(0 0 8px rgba(204, 20, 20, 0.20));
-
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-              filter 0.3s ease;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter    0.28s ease;
 }
 
-.navbar-logo:hover img {
-  transform: scale(1.05);
-  filter:
-    brightness(1.5)
-    contrast(0.92)
-    drop-shadow(0 0 12px rgba(204, 20, 20, 0.38));
+.navbar__logo:hover img {
+  transform: scale(1.04);
+  filter: 
+    brightness(0.8)
+    contrast(1.25)
+    drop-shadow(0 0 8px rgba(204, 20, 20, 0.28));
 }
 
-/* Slightly smaller chip when scrolled */
-.navbar.scrolled .navbar-logo {
-  padding: 6px 12px 6px 8px;
-}
-
-.navbar.scrolled .navbar-logo img {
-  height: 42px;
+.navbar--scrolled .navbar__logo img {
+  height: 50px;
 }
 
 
-/* ─────────────────────────────────────────────
-   NAV MENU — Desktop
-   ───────────────────────────────────────────── */
-.nav-menu {
+/* ══════════════════════════════════════════
+   DESKTOP NAV LINKS
+   Dark text on white — fully legible, theme-correct.
+══════════════════════════════════════════ */
+.navbar__links {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1;
+  justify-content: center;
 }
 
-/* ── Nav Links ── */
-.nav-menu li a {
+.navbar__link {
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
+  padding: var(--space-2) var(--space-3);
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-body);
+  color: #ffffff;
   text-decoration: none;
-  letter-spacing: 0.01em;
   border-radius: var(--radius-md);
-  transition: color var(--transition-base),
-              background var(--transition-base);
   white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition:
+    color      var(--transition-base),
+    background var(--transition-base);
 }
 
-/* Animated underline — slides from left */
-.nav-menu li a::after {
-  content: '';
+/* Animated underline */
+.navbar__link-bar {
   position: absolute;
-  bottom: 2px;
-  left: 14px;
-  right: 14px;
+  bottom: 4px;
+  left: var(--space-3);
+  right: var(--space-3);
   height: 2px;
   background: var(--ftl-red);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-pill);
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.nav-menu li a:hover {
-  color: var(--color-text-heading);
-  background: rgba(34, 44, 60, 0.06);
+.navbar__link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
 }
-.nav-menu li a:hover::after {
+.navbar__link:hover .navbar__link-bar {
   transform: scaleX(1);
 }
 
-/* Active */
-.nav-menu li a.active {
-  color: var(--color-primary);
+.navbar__link--active {
+  color: var(--color-primary);                 /* --ftl-red */
   font-weight: var(--font-weight-semibold);
+  background: var(--color-primary-tint);       /* --ftl-red-muted */
 }
-.nav-menu li a.active::after {
+.navbar__link--active .navbar__link-bar {
   transform: scaleX(1);
-  background: var(--ftl-red);
 }
 
-/* ─────────────────────────────────────────────
-   CTA BUTTON
-   ───────────────────────────────────────────── */
-.consult-btn {
-  position: relative;
-  display: inline-flex !important;
+
+/* ══════════════════════════════════════════
+   RIGHT SIDE  (CTA + hamburger)
+══════════════════════════════════════════ */
+.navbar__right {
+  display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: 10px 20px !important;
-  margin-left: var(--space-2);
-  font-family: var(--font-label) !important;
-  font-size: var(--text-xs) !important;
-  font-weight: var(--font-weight-bold) !important;
-  letter-spacing: var(--tracking-wide) !important;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+
+/* ══════════════════════════════════════════
+   CTA BUTTON
+══════════════════════════════════════════ */
+.navbar__cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-label);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--ftl-white) !important;
+  color: var(--color-text-on-primary);         /* white */
   background: var(--gradient-brand);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-red-sm),
-              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-red-sm);
   cursor: pointer;
-  overflow: hidden;
+  text-decoration: none;
   white-space: nowrap;
-  transition: transform var(--transition-spring),
-              box-shadow var(--transition-base),
-              background var(--transition-base) !important;
+  overflow: hidden;
+  transition:
+    transform  var(--transition-spring),
+    box-shadow var(--transition-base),
+    background var(--transition-base);
 }
 
 /* Shimmer sweep */
-.consult-btn::before {
-  content: '';
+.navbar__cta-shimmer {
   position: absolute;
-  top: 0; left: -75%;
-  width: 50%; height: 100%;
+  top: 0; left: -80%;
+  width: 55%;
+  height: 100%;
   background: linear-gradient(
     120deg,
     transparent 0%,
     rgba(255, 255, 255, 0.22) 50%,
     transparent 100%
   );
-  transform: skewX(-20deg);
-  transition: left 0.55s ease;
+  transform: skewX(-18deg);
   pointer-events: none;
+  transition: left 0.52s ease;
 }
 
-.consult-btn::after { display: none !important; }
-
-.consult-btn:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-red-md),
-              inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+.navbar__cta:hover {
+  color: var(--ftl-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-red-md);
   background: linear-gradient(135deg, var(--ftl-red-light) 0%, var(--ftl-red) 100%);
-  color: var(--ftl-white) !important;
 }
-.consult-btn:hover::before { left: 125%; }
-.consult-btn:active {
-  transform: translateY(0px) !important;
-  box-shadow: var(--shadow-red-sm) !important;
+.navbar__cta:hover .navbar__cta-shimmer { left: 130%; }
+.navbar__cta:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-red-sm);
 }
 
-/* ─────────────────────────────────────────────
-   HAMBURGER ICON — Mobile
-   ───────────────────────────────────────────── */
-.menu-icon {
+
+/* ══════════════════════════════════════════
+   HAMBURGER — mobile only
+══════════════════════════════════════════ */
+.navbar__hamburger {
   display: none;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
   width: 38px;
   height: 38px;
-  padding: 6px;
-  cursor: pointer;
+  padding: 7px;
+  background: var(--color-bg-section-alt);     /* --ftl-gray-100 */
+  border: 1px solid var(--color-border);       /* --ftl-gray-200 */
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: background var(--transition-base),
-              border-color var(--transition-base);
+  cursor: pointer;
   flex-shrink: 0;
-}
-.menu-icon:hover {
-  background: rgba(34, 44, 60, 0.08);
-  border-color: rgba(204, 20, 20, 0.12);
+  transition:
+    background   var(--transition-base),
+    border-color var(--transition-base);
 }
 
-.bar {
+.navbar__hamburger:hover {
+  background: var(--color-primary-tint);
+  border-color: rgba(204, 20, 20, 0.30);
+}
+
+.navbar__bar {
   display: block;
   width: 100%;
   height: 2px;
-  background: var(--ftl-gray-700);
+  background: var(--color-text-body);          /* dark gray on white — visible */
   border-radius: var(--radius-pill);
   transform-origin: center;
-  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-              opacity   0.25s ease,
-              background var(--transition-base),
-              width 0.25s ease;
-}
-.menu-icon:hover .bar { background: var(--color-primary); }
-
-.menu-icon.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.menu-icon.open .bar:nth-child(2) { opacity: 0; width: 0; }
-.menu-icon.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.menu-icon.open .bar               { background: var(--ftl-red); }
-
-/* ─────────────────────────────────────────────
-   MOBILE MENU
-   ───────────────────────────────────────────── */
-@media screen and (max-width: 992px) {
-
-  .menu-icon { display: flex; }
-
-  .nav-menu {
-    position: fixed;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    min-height: calc(100vh - 80px);
-    background: var(--color-bg-card);
-    flex-direction: column;
-    align-items: stretch;
-    padding: var(--space-6) var(--space-6) var(--space-16);
-    gap: var(--space-1);
-    border-top: 1px solid rgba(204, 20, 20, 0.12);
-    opacity: 0;
-    transform: translateY(-12px);
-    pointer-events: none;
-    transition: opacity 0.35s ease,
-                transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    overflow-y: auto;
-  }
-
-  .nav-menu.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-  }
-
-  /* Staggered item fade-in */
-  .nav-menu li {
-    opacity: 0;
-    transform: translateX(-16px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  .nav-menu.active li:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.05s; }
-  .nav-menu.active li:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.10s; }
-  .nav-menu.active li:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.15s; }
-  .nav-menu.active li:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.20s; }
-  .nav-menu.active li:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.25s; }
-  .nav-menu.active li:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.30s; }
-  .nav-menu.active li:nth-child(7) { opacity: 1; transform: none; transition-delay: 0.35s; }
-
-  /* Mobile nav links */
-  .nav-menu li a {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 14px 16px;
-    font-size: var(--text-base);
-    color: var(--color-text-body);
-    border-radius: var(--radius-md);
-    border-left: 3px solid transparent;
-    background: transparent;
-    transition: color var(--transition-base),
-                background var(--transition-base),
-                border-color var(--transition-base),
-                padding-left 0.25s ease;
-  }
-
-  .nav-menu li a::after { display: none; }
-
-  .nav-menu li a:hover {
-    color: var(--color-text-heading);
-    background: rgba(204, 20, 20, 0.08);
-    border-left-color: var(--ftl-red);
-    padding-left: 22px;
-  }
-  .nav-menu li a.active {
-    color: var(--ftl-red);
-    background: rgba(204, 20, 20, 0.10);
-    border-left-color: var(--ftl-red);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  /* Divider before CTA */
-  .nav-menu li:last-child {
-    margin-top: var(--space-3);
-    padding-top: var(--space-3);
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-  }
-
-  /* Full-width CTA on mobile */
-  .consult-btn {
-    width: 100% !important;
-    justify-content: center !important;
-    padding: 13px 20px !important;
-    font-size: var(--text-sm) !important;
-    border-radius: var(--radius-md) !important;
-    margin-left: 0 !important;
-  }
-
-  .navbar.scrolled .navbar-container { height: 72px; }
+  transition:
+    transform  0.32s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity    0.22s ease,
+    background var(--transition-base),
+    width      0.22s ease;
 }
 
-/* ─────────────────────────────────────────────
-   SMALL PHONES
-   ───────────────────────────────────────────── */
-@media screen and (max-width: 480px) {
-  .navbar-container   { width: 94%; }
-  .navbar-logo img    { height: 40px; }
-  .navbar-logo        { padding: 6px 10px 6px 8px; }
-} 
+.navbar__hamburger--open .navbar__bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+  background: var(--ftl-red);
+}
+.navbar__hamburger--open .navbar__bar:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.navbar__hamburger--open .navbar__bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+  background: var(--ftl-red);
+}
+
+
+/* ══════════════════════════════════════════
+   MOBILE MENU DRAWER
+   White panel — seamless drop from white navbar.
+══════════════════════════════════════════ */
+.navbar__mobile {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg-card);            /* white — matches navbar */
+  border-top: 2px solid var(--color-primary-tint);
+  box-shadow: var(--shadow-xl);
+  overflow-y: auto;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition:
+    opacity   0.28s ease,
+    transform 0.30s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.navbar__mobile--open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.navbar--scrolled .navbar__mobile {
+  top: 62px;
+}
+
+.navbar__mobile-links {
+  list-style: none;
+  padding: var(--space-6) var(--space-6) var(--space-16);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Staggered reveal */
+.navbar__mobile-item {
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity   0.26s ease calc(var(--i, 0) * 0.05s),
+    transform 0.26s ease calc(var(--i, 0) * 0.05s);
+}
+
+.navbar__mobile--open .navbar__mobile-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navbar__mobile-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-4) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-body);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  border-left: 3px solid transparent;
+  transition:
+    color        var(--transition-base),
+    background   var(--transition-base),
+    border-color var(--transition-base),
+    padding-left 0.22s ease;
+}
+
+.navbar__mobile-link:hover {
+  color: var(--color-text-heading);
+  background: var(--color-bg-section-alt);
+  border-left-color: var(--ftl-red);
+  padding-left: var(--space-6);
+}
+
+.navbar__mobile-link--active {
+  color: var(--color-primary);
+  background: var(--color-primary-tint);
+  border-left-color: var(--ftl-red);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Divider + full-width CTA */
+.navbar__mobile-cta-wrap {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-divider);
+}
+
+.navbar__cta--mobile {
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+}
+
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 992px) {
+  .navbar__links { display: none; }
+  .navbar__hamburger { display: flex; }
+
+  .navbar__right > .navbar__cta:not(.navbar__cta--mobile) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar__container { width: 94%; }
+  .navbar__logo img  { height: 38px; }
+}

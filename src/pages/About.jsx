@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
+import StatCounter from "../components/common/StatCounter";
 import "./About.css";
 import aboutImage from "../assets/images/who we are.jpeg";
 
@@ -118,7 +119,7 @@ const About = () => {
         <div className="about-stats">
           {stats.map((s) => (
             <div className="stat-block about-stats__item" key={s.label}>
-              <div className="stat-value">{s.value}</div>
+              <StatCounter value={s.value} label={s.label} />
               <div className="stat-label">{s.label}</div>
             </div>
           ))}
@@ -207,9 +208,7 @@ const About = () => {
               <Link to="/courses" className="btn-primary">
                 Explore Courses
               </Link>
-              <Link to="/contact" className="btn-secondary" style={{ borderColor: "#fff", color: "#fff" }}>
-                Contact Us
-              </Link>
+              
             </div>
           </div>
         </section>

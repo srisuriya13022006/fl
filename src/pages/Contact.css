@@ -269,7 +269,7 @@
   padding: var(--space-4) var(--space-5);
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: var(--ftl-white);
+  color: var(--ftl-charcoal);
   background: var(--color-bg-dark);
   border: 2px solid rgba(204, 20, 20, 0.3);
   border-radius: var(--radius-md);
@@ -315,6 +315,47 @@
   font-size: var(--text-sm);
   margin-bottom: var(--space-6);
   animation: slideDown var(--transition-base);
+}
+
+.contact-error-message {
+  padding: var(--space-4) var(--space-6);
+  background: rgba(255, 60, 60, 0.08);
+  border: 1px solid rgba(255, 60, 60, 0.18);
+  border-radius: var(--radius-md);
+  color: #ff4d4d;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-6);
+}
+
+.contact-qr-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+.contact-qr-image {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.contact-qr-caption {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-body);
+  text-align: center;
+  margin: 0;
+  max-width: 320px;
 }
 
 @keyframes slideDown {

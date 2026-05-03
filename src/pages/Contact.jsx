@@ -1,12 +1,14 @@
 // src/pages/Contact.jsx
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import "./Contact.css";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const Contact = () => {
+  const formRef = useRef(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,7 +17,14 @@ const Contact = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
   const [errors, setErrors] = useState({});
+  const qrImage = "/images/company-brochure-qr.png";
+
+  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "YOUR_SERVICE_ID";
+  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "YOUR_TEMPLATE_ID";
+  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "YOUR_PUBLIC_KEY";
 
   /* ── Validate form inputs ── */
   const validateForm = () => {
@@ -63,18 +72,36 @@ const Contact = () => {
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length === 0) {
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
+      if (!formRef.current) {
+        setSendError("Unable to submit form right now. Please try again later.");
+        return;
+      }
 
-      /* Reset success message after 3 seconds */
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 3000);
+      if (SERVICE_ID === "YOUR_SERVICE_ID" || TEMPLATE_ID === "YOUR_TEMPLATE_ID" || PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+        setSendError("Email service is not configured. Please set your EmailJS keys.");
+        return;
+      }
+
+      setSending(true);
+      setSendError("");
+
+      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+        .then(() => {
+          setSubmitted(true);
+          setSending(false);
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            message: "",
+          });
+          setErrors({});
+        })
+        .catch((error) => {
+          console.error("Email send failed", error);
+          setSendError("We could not send your message at this time. Please try again later.");
+          setSending(false);
+        });
     } else {
       setErrors(newErrors);
     }
@@ -134,7 +161,7 @@ const Contact = () => {
                   <div className="contact-item__content">
                     <h3>Phone</h3>
                     <p>
-                      <a href="tel:+919843329804">+91 98433 29804</a>
+                      <a href="tel:+919443692667">+91 9443692667</a>
                     </p>
                   </div>
                 </div>
@@ -160,12 +187,30 @@ const Contact = () => {
                 <h2>Send us a Message</h2>
 
                 {submitted && (
-                  <div className="contact-success-message">
-                    ✓ Thank you! Your message has been received. We'll be in touch soon!
+                  <>
+                    <div className="contact-success-message">
+                      ✓ Thank you! Your message has been received. We'll be in touch soon!
+                    </div>
+                    <div className="contact-qr-panel">
+                      <img
+                        src={qrImage}
+                        alt="Scan to view company brochure details"
+                        className="contact-qr-image"
+                      />
+                      <p className="contact-qr-caption">
+                        Scan this QR code to access our company brochure and full contact details in a single image.
+                      </p>
+                    </div>
+                  </>
+                )}
+
+                {sendError && (
+                  <div className="contact-error-message">
+                    {sendError}
                   </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="contact-form">
+                <form ref={formRef} onSubmit={handleSubmit} className="contact-form">
                   {/* Name Field */}
                   <div className="form-group">
                     <label htmlFor="name">Name</label>
@@ -235,8 +280,8 @@ const Contact = () => {
                   </div>
 
                   {/* Submit Button */}
-                  <button type="submit" className="submit-btn">
-                    Book Free Demo Session
+                  <button type="submit" className="submit-btn" disabled={sending}>
+                    {sending ? "Sending..." : "Book Free Demo Session"}
                   </button>
                 </form>
               </div>

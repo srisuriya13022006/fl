@@ -57,18 +57,60 @@
 
 /* CARD */
 .service-card {
+  position: relative;
   padding: 30px;
   text-align: center;
   border-radius: 16px;
-  transition: 0.3s;
-  position: relative;
+  border: 1px solid rgba(204, 20, 20, 0.1);
+  background: var(--color-bg-card);
   overflow: hidden;
+  cursor: default;
+  transition:
+    transform     0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow    0.38s ease,
+    border-color  0.30s ease;
+}
+
+/* Red top-bar — slides in on hover */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Glow ring — grows from center on hover */
+.service-card__glow-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(204, 20, 20, 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.40s ease;
+  pointer-events: none;
 }
 
 /* HOVER */
 .service-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(204,20,20,0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(204, 20, 20, 0.2);
+  border-color: var(--color-border-strong);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-card:hover .service-card__glow-ring {
+  opacity: 1;
 }
 
 /* ICON */
@@ -76,11 +118,13 @@
   font-size: 45px;
   color: var(--ftl-red);
   margin-bottom: 15px;
-  transition: 0.3s;
+  display: inline-block;
+  transition: transform 0.28s ease, filter 0.28s ease;
 }
 
 .service-card:hover .service-card__icon {
-  transform: scale(1.2) rotate(5deg);
+  transform: translateY(-4px) scale(1.05);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.08));
 }
 
 /* TITLE */

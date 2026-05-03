@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import StatCounter from "../common/StatCounter";
 import "./WhyChooseUs.css";
 import {
   FaBookOpen,
@@ -81,7 +82,7 @@ const WhyChooseUs = () => {
         <div className="why-stats">
           {stats.map((stat, index) => (
             <div className="why-stat-item" key={index}>
-              <div className="why-stat-value">{stat.value}</div>
+              <StatCounter value={stat.value} label={stat.label} />
               <div className="why-stat-label">{stat.label}</div>
             </div>
           ))}

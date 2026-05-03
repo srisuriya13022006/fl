@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+import StatCounter from "../common/StatCounter";
 import "./HeroSection.css";
 import heroImage from "../../assets/caurosal/slide 1.png";
 import slide2 from "../../assets/caurosal/slide 2.jpeg";
@@ -88,8 +89,10 @@ const HeroSection = () => {
 
           {/* Heading */}
           <h1 className="hero-heading">
-            Empowering<br />
-            Careers Through<br />
+           <span className="hero-main-text">
+    Empowering<br />
+    Careers Through
+  </span>
             <span className="accent-word">Technology</span>
           </h1>
 
@@ -129,7 +132,7 @@ const HeroSection = () => {
             {STATS.map((s, i) => (
               <React.Fragment key={i}>
                 <div className="hero-stat">
-                  <span className="hero-stat-val">{s.value}</span>
+                  <StatCounter value={s.value} label={s.label} />
                   <span className="hero-stat-lbl">{s.label}</span>
                 </div>
                 {i < STATS.length - 1 && (

@@ -129,6 +129,9 @@
   display: inline-block;
 }
 
+.hero-main-text{
+  color: black;
+}
 /* ── Sub-headline ── */
 .hero-sub {
   display: flex;
@@ -480,9 +483,10 @@
 .hero-slide-cap-sub {
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  color: var(--ftl-silver-light);
-  opacity: 0.85;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  color: var(--ftl-white);
+  opacity: 1;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+  font-weight: var(--font-weight-medium);
 }
 
 /* ── Dots ── */
